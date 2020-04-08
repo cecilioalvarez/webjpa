@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.avalon.dominio.Categoria;
 import es.avalon.dominio.Libro;
+import es.avalon.repositorios.CategoriaRepository;
 import es.avalon.repositorios.LibroRepository;
 import es.avalon.repositorios.jdbc.LibroRepositoryJDBC;
+import es.avalon.repositorios.jpa.CategoriaRepositoryJPA;
 import es.avalon.repositorios.jpa.LibroRepositoryJPA;
 
 /**
@@ -29,6 +32,7 @@ public class ServletLibros extends HttpServlet {
 		RequestDispatcher despachador = null;
 		String accion = request.getParameter("accion");
 		LibroRepository repositorio = new LibroRepositoryJPA();
+		CategoriaRepository repositorioCategoria = new CategoriaRepositoryJPA();
 
 		// hay algun tipo de accion
 		if (accion != null) {
@@ -45,6 +49,32 @@ public class ServletLibros extends HttpServlet {
 				// Borrar
 				Libro milibro = new Libro(isbn);
 				repositorio.borrar(milibro);
+
+				// Cargar nuevo listado
+				List<Libro> listaLibros = repositorio.buscarTodos();
+				request.setAttribute("listaLibros", listaLibros);
+				// Redirigir
+				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
+			}
+
+			// Accion=insertar este else es lo mismo que -->//else if
+			// (accion.equals("formularioInsertar")) {
+			else {
+				// Recepcionar
+				String isbn = request.getParameter("isbn");
+				String titulo = request.getParameter("titulo");
+				String autor = request.getParameter("autor");
+				int precio = Integer.parseInt(request.getParameter("precio"));
+				String categoria = request.getParameter("categoria");
+
+				// Insertar
+				Libro milibro = new Libro(isbn, titulo, autor, precio);
+				//Uso el nuevo repositorio para buscar una categoria
+				Categoria micategoria=repositorioCategoria.buscarPorNombre(categoria);
+				//Asigno al libro la categoria que necesita
+				milibro.setCategoria(micategoria);
+				//Salvo el libro
+				repositorio.insertar(milibro);
 
 				// Cargar nuevo listado
 				List<Libro> listaLibros = repositorio.buscarTodos();
