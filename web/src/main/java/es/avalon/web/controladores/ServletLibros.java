@@ -58,7 +58,7 @@ public class ServletLibros extends HttpServlet {
 					
 					despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
 				}
-		} else {
+		} else { 
 
 			List<Libro> listaLibros = new ArrayList<Libro>();
 
