@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.avalon.dominio.Categoria;
 import es.avalon.dominio.Libro;
+import es.avalon.repositorios.CategoriaRepository;
 import es.avalon.repositorios.LibroRepository;
 import es.avalon.repositorios.jdbc.LibroRepositoryJDBC;
+import es.avalon.repositorios.jpa.CategoriaRepositoryJPA;
 import es.avalon.repositorios.jpa.LibroRepositoryJPA;
 
 /**
@@ -29,23 +32,50 @@ public class ServletLibros extends HttpServlet {
 		RequestDispatcher despachador = null;
 		String accion = request.getParameter("accion");
 		LibroRepository repositorio = new LibroRepositoryJPA();
+		CategoriaRepository repositorioCategoria = new CategoriaRepositoryJPA();
 
 		// hay algun tipo de accion
 		if (accion != null) {
+			
+			
 			if (accion.equals("formularioInsertar")) {
 
 				despachador = request.getRequestDispatcher("libros2/formularioInsertar.jsp");
-			} else if (accion.equals("borrar")) {
+			}else {
 
+				
 				String isbn = request.getParameter("isbn");
-				Libro milibro = new Libro(isbn);
-				repositorio.borrar(milibro);
+				String titulo = request.getParameter("titulo");
+				String autor = request.getParameter("autor");
+				int precio = Integer.parseInt(request.getParameter("precio"));
+				String categoria = request.getParameter("categoria");
+
+			
+				Libro milibro = new Libro(isbn, titulo, autor, precio);
+				
+				//uso el nuevo repositorio para buscar una categoria
+				Categoria micategoria= repositorioCategoria.buscarPorNombre(categoria);
+				//asigno al libro la categoria que necesita
+				milibro.setCategoria(micategoria);
+				
+				//salvo el libro
+				repositorio.insertar(milibro);
+				
+				
 				List<Libro> listaLibros = repositorio.buscarTodos();
 				request.setAttribute("listaLibros", listaLibros);
 				// redirigir
 				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
-
 			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		} else {
 
 			List<Libro> listaLibros = new ArrayList<Libro>();
