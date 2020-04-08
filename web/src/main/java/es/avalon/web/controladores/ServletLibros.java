@@ -47,7 +47,7 @@ public class ServletLibros extends HttpServlet {
 				String isbn = request.getParameter("isbn");
 
 				// Borrar
-				Libro milibro = new Libro(isbn);
+				Libro milibro = new Libro(isbn);				
 				repositorio.borrar(milibro);
 
 				// Cargar nuevo listado
