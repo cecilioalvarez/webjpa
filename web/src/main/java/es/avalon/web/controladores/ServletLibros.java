@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.avalon.dominio.Categoria;
 import es.avalon.dominio.Libro;
+import es.avalon.repositorios.CategoriaRepository;
 import es.avalon.repositorios.LibroRepository;
 import es.avalon.repositorios.jdbc.LibroRepositoryJDBC;
+import es.avalon.repositorios.jpa.CategoriaRepositoryJPA;
 import es.avalon.repositorios.jpa.LibroRepositoryJPA;
 
 /**
@@ -29,6 +32,7 @@ public class ServletLibros extends HttpServlet {
 		RequestDispatcher despachador = null;
 		String accion = request.getParameter("accion");
 		LibroRepository repositorio = new LibroRepositoryJPA();
+		CategoriaRepository repositorioCategoria = new CategoriaRepositoryJPA();
 
 		// hay algun tipo de accion
 		if (accion != null) {
@@ -39,20 +43,21 @@ public class ServletLibros extends HttpServlet {
 
 			} else if (accion.equals("insertar")) {
 
-				// accion=insertar
-
-				// recepcionar
 				String isbn = request.getParameter("isbn");
 				String titulo = request.getParameter("titulo");
 				String autor = request.getParameter("autor");
 				int precio = Integer.parseInt(request.getParameter("precio"));
 				String categoria = request.getParameter("categoria");
 
-				// insertar
 				Libro milibro = new Libro(isbn, titulo, autor, precio);
+				// uso el nuevo repositorio para buscar una categoria
+				Categoria micategoria=repositorioCategoria.buscarPorNombre(categoria);
+				
+				// asigno al libro la categoria que necesita
+				milibro.setCategoria(micategoria);
+				//salvo el libro
 				repositorio.insertar(milibro);
 
-				// cargar el nuevo listado
 				List<Libro> listaLibros = repositorio.buscarTodos();
 				request.setAttribute("listaLibros", listaLibros);
 
@@ -81,6 +86,8 @@ public class ServletLibros extends HttpServlet {
 
 			}
 
+			
+			
 		} else {
 
 			List<Libro> listaLibros = new ArrayList<Libro>();
