@@ -7,11 +7,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<dependencies>
-		<dependency>
-			<groupId>es.avalon</groupId>
-			<artifactId>repositorios</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
@@ -22,5 +17,10 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>es.avalon</groupId>
+			<artifactId>repositorios</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
