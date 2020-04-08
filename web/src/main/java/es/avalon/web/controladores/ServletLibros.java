@@ -32,6 +32,50 @@ public class ServletLibros extends HttpServlet {
 
 		// hay algun tipo de accion
 		if (accion != null) {
+			 if (accion.equals("formularioInsertar")) {
+				 
+				 despachador = request.getRequestDispatcher("libros2/formularioInsertar.jsp");	
+				 
+			 } else if (accion.equals("borrar")){
+					
+					//Recepcionar
+					String isbn = request.getParameter("isbn");	
+					
+					//Eliminar
+					Libro milibro = new Libro(isbn);
+					
+					repositorio.borrar(milibro);
+					
+					//Cargar el nuevo listado
+					List<Libro> listaLibros = repositorio.buscarTodos();
+					request.setAttribute("listaLibros", listaLibros);
+					
+					//Redirigir
+					despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");		
+		
+			 } else {
+					//accion de insertar
+					
+					//Recepcionar
+					String isbn = request.getParameter("isbn");
+					String titulo = request.getParameter("titulo");
+					String autor = request.getParameter("autor");
+					int precio = Integer.parseInt(request.getParameter("precio"));
+					String categoria = request.getParameter("categoria");
+					
+					//Insertar
+					Libro milibro = new Libro(isbn, titulo, autor, precio);
+					
+					repositorio.insertar(milibro);
+					
+					//Cargar el nuevo listado
+					List<Libro> listaLibros = repositorio.buscarTodos();
+					request.setAttribute("listaLibros", listaLibros);
+					
+					//Redirigir
+					despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
+				} 
+		
 		} else {
 
 			List<Libro> listaLibros = new ArrayList<Libro>();
