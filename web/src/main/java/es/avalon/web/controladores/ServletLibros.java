@@ -31,6 +31,8 @@ public class ServletLibros extends HttpServlet {
 
 			if (accion.equals("formularioInsertar")) {
 
+				List<Categoria> categorias = repositorioCategoria.buscarTodos();
+				request.setAttribute("listaCategorias", categorias);
 				despachador = request.getRequestDispatcher("libros2/formularioInsertar.jsp");
 
 			} else if (accion.equals("insertar")) {
@@ -96,20 +98,12 @@ public class ServletLibros extends HttpServlet {
 		} else {
 
 			List<Libro> listaLibros = new ArrayList<Libro>();
-
 			listaLibros = repositorio.buscarTodos();
-
 			despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
 			request.setAttribute("listaLibros", listaLibros);
 		}
 
 		despachador.forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		doGet(request, response);
 	}
 
 }

@@ -1,3 +1,9 @@
+<%@page import="es.avalon.dominio.Categoria"%>
+<%@page import="java.util.List"%>
+<%
+List<Categoria> lista =(List<Categoria>) request.getAttribute("listaCategorias");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,9 +26,16 @@ autor:<input type="text" name="autor" />
 precio:<input type="text" name="precio" />
 </p>
 
-<p>
-categoria:<input type="text" name="categoria" />
-</p>
+
+categoria:<select name="categoria">
+
+<% for (Categoria c:lista){ %>
+
+   <option><%= c.getNombre() %></option> 
+ 
+ <%} %>
+</select>
+
 <p>
 <input type="hidden" name="accion" value="insertar"/>
 <input type="submit" value="aceptar"/>
