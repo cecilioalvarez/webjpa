@@ -74,6 +74,10 @@ public class ServletLibros extends HttpServlet {
 				String isbn = request.getParameter("isbn");
 				Libro libro = repositorio.buscarPorISBN(isbn);
 				request.setAttribute("libro", libro);
+				
+				List<Categoria> listaCategorias = repositorioCategoria.buscarTodos();
+				request.setAttribute("listaCategorias", listaCategorias);
+				
 				despachador = request.getRequestDispatcher("libros2/editar.jsp");
 
 			} else if (accion.equals("salvar")) {
@@ -104,6 +108,12 @@ public class ServletLibros extends HttpServlet {
 		}
 
 		despachador.forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		doGet(request, response);
 	}
 
 }

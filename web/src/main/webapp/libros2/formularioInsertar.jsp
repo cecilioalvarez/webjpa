@@ -11,7 +11,7 @@ List<Categoria> lista =(List<Categoria>) request.getAttribute("listaCategorias")
 <title>Insert title here</title>
 </head>
 <body>
-<form action="ServletLibros" method="POST">
+<form action="ServletLibros">
 
 <p>
 isbn:<input type="text" name="isbn" />
@@ -25,7 +25,6 @@ autor:<input type="text" name="autor" />
 <p>
 precio:<input type="text" name="precio" />
 </p>
-
 
 categoria:<select name="categoria">
 

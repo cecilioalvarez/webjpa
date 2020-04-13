@@ -2,9 +2,15 @@
 <%@page import="es.avalon.dominio.Libro"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="es.avalon.dominio.Categoria"%>
+<%@page import="java.util.List"%>
+
+<%
+List<Categoria> lista =(List<Categoria>) request.getAttribute("listaCategorias");
+%>
+
 <%
 Libro libro= (Libro)request.getAttribute("libro");
-
 %>
 <html>
 <head>
@@ -27,9 +33,15 @@ autor:<input type="text" name="autor" value="<%=libro.getAutor()%>"  />
 precio:<input type="text" name="precio" value="<%=libro.getPrecio()%>" />
 </p>
 
-<p>
-categoria:<input type="text" name="categoria"  value="<%=libro.getCategoria().getNombre()%>" />
-</p>
+categoria:<select name="categoria">
+
+<% for (Categoria c:lista){ %>
+
+   <option><%= c.getNombre() %></option> 
+ 
+ <%} %>
+</select>
+
 <p>
 <input type="submit" value="aceptar"/>
 </p>
