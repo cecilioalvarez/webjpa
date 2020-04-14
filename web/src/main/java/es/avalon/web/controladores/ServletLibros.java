@@ -54,7 +54,7 @@ public class ServletLibros extends HttpServlet {
 				List<Libro> listaLibros = repositorio.buscarTodos();
 				request.setAttribute("listaLibros", listaLibros);
 				// Redirigir
-				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
+				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp"); 
 			}
 			
 			//Ver detalle
