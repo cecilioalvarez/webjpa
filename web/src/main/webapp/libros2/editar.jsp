@@ -28,7 +28,7 @@ precio:<input type="text" name="precio" value="<%=libro.getPrecio()%>" />
 </p>
 
 <p>
-categoria:<input type="text" name="categoria"  value="<%=libro.getCategoria()%>" />
+categoria:<input type="text" name="categoria"  value="<%=libro.getCategoria().getNombre()%>" />
 </p>
 <p>
 <input type="submit" value="aceptar"/>

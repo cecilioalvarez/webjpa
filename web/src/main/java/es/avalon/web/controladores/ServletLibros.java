@@ -57,7 +57,51 @@ public class ServletLibros extends HttpServlet {
 					//Redirigir
 					despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");		
 		
-			 } else {
+			 } else if (accion.equals("editar")) {
+					
+					String isbn = request.getParameter("isbn");
+					
+					Libro libro = repositorio.buscarPorISBN(isbn);
+					request.setAttribute("libro", libro);
+					
+					despachador = request.getRequestDispatcher("libros2/editar.jsp");
+					
+			 } else if (accion.equals("salvar")){
+				 
+				//Recepcionar
+					String isbn = request.getParameter("isbn");
+					String titulo = request.getParameter("titulo");
+					String autor = request.getParameter("autor");
+					int precio = Integer.parseInt(request.getParameter("precio"));
+					String categoria = request.getParameter("categoria");
+					
+					//Actualizar
+					Libro libro = new Libro(isbn, titulo, autor, precio);
+					Categoria micategoria = repositorioCategoria.buscarPorNombre(categoria);
+					libro.setCategoria(micategoria);
+					
+					repositorio.salvar(libro);
+					
+					//Cargar el nuevo listado
+					List<Libro> listaLibros = repositorio.buscarTodos();
+					request.setAttribute("listaLibros", listaLibros);
+					
+					//Redirigir
+					despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
+					
+			 } else if (accion.equals("detalle")) {
+				 
+				 	String isbn = request.getParameter("isbn");
+					
+					Libro libro = repositorio.buscarPorISBN(isbn);
+					request.setAttribute("libro", libro);
+					
+					
+					despachador = request.getRequestDispatcher("libros2/detalle.jsp");	
+				 
+				 
+			 }else {
+			 
 					//accion de insertar
 					
 					//Recepcionar
