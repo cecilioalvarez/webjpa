@@ -25,7 +25,7 @@ autor:<%=libro.getAutor()%>
 precio:<%=libro.getPrecio()%>
 </p>
 <p>
-categoria:<%=libro.getCategoria()%>
+categoria:<%=libro.getCategoria().getNombre()%>
 </p>
 
 </body>
