@@ -1,8 +1,6 @@
 <%@page import="es.avalon.dominio.Categoria"%>
 <%@page import="java.util.List"%>
-<%
-List<Categoria> lista =(List<Categoria>) request.getAttribute("listaCategorias");
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -11,34 +9,33 @@ List<Categoria> lista =(List<Categoria>) request.getAttribute("listaCategorias")
 <title>Insert title here</title>
 </head>
 <body>
-<form action="ServletLibros">
+	<form action="ServletLibros">
 
-<p>
-isbn:<input type="text" name="isbn" />
-</p>
-<p>
-titulo:<input type="text" name="titulo" />
-</p>
-<p>
-autor:<input type="text" name="autor" />
-</p>
-<p>
-precio:<input type="text" name="precio" />
-</p>
+		<p>
+			isbn:<input type="text" name="isbn" />
+		</p>
+		<p>
+			titulo:<input type="text" name="titulo" />
+		</p>
+		<p>
+			autor:<input type="text" name="autor" />
+		</p>
+		<p>
+			precio:<input type="text" name="precio" />
+		</p>
 
-categoria:<select name="categoria">
+		categoria:<select name="categoria">
 
-<% for (Categoria c:lista){ %>
+			<c:forEach items="${listaCategorias}" var="c">
 
-   <option><%= c.getNombre() %></option> 
- 
- <%} %>
-</select>
+				<option>${c.nombre}</option>
+			</c:forEach>
+		</select>
 
-<p>
-<input type="hidden" name="accion" value="insertar"/>
-<input type="submit" value="aceptar"/>
-</p>
-</form>
+		<p>
+			<input type="hidden" name="accion" value="insertar" /> <input
+				type="submit" value="aceptar" />
+		</p>
+	</form>
 </body>
 </html>

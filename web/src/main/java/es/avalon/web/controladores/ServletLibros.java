@@ -74,10 +74,9 @@ public class ServletLibros extends HttpServlet {
 				String isbn = request.getParameter("isbn");
 				Libro libro = repositorio.buscarPorISBN(isbn);
 				request.setAttribute("libro", libro);
-				
+
 				List<Categoria> listaCategorias = repositorioCategoria.buscarTodos();
 				request.setAttribute("listaCategorias", listaCategorias);
-				
 				despachador = request.getRequestDispatcher("libros2/editar.jsp");
 
 			} else if (accion.equals("salvar")) {
@@ -96,6 +95,18 @@ public class ServletLibros extends HttpServlet {
 				List<Libro> listaLibros = repositorio.buscarTodos();
 				request.setAttribute("listaLibros", listaLibros);
 				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
+
+			} else if (accion.equals("ordenarTitulo")) {
+
+				List<Libro> listaLibros = repositorio.ordenarPorTitulo();
+				request.setAttribute("listaLibros", listaLibros);
+				despachador = request.getRequestDispatcher("libros2/ordenados.jsp");
+
+			} else if (accion.equals("ordenarPrecio")) {
+
+				List<Libro> listaLibros = repositorio.ordenarPorPrecio();
+				request.setAttribute("listaLibros", listaLibros);
+				despachador = request.getRequestDispatcher("libros2/ordenados.jsp");
 
 			}
 

@@ -14,10 +14,10 @@
 	<table>
 		<tr>
 			<th>ISBN</th>
-			<th><a href = "ServletLibros?accion=ordenarTitulo">Titulo</a></th>
+			<th>Titulo</th>
 			<th>Categoria</th>
 			<th>Autor</th>
-			<th><a href = "ServletLibros?accion=ordenarPrecio">Precio</a></th>
+			<th>Precio</th>
 		</tr>
 		<c:forEach items="${listaLibros}" var="libro">
 			<tr>
@@ -26,13 +26,9 @@
 				<td>${libro.categoria.nombre}</td>
 				<td>${libro.autor}</td>
 				<td>${libro.precio}</td>
-				<td><a href="ServletLibros?isbn=${libro.isbn}&accion=borrar">borrar</a></td>
-				<td><a href="ServletLibros?isbn=${libro.isbn}&accion=detalle">detalle</a></td>
-				<td><a href="ServletLibros?isbn=${libro.isbn}&accion=editar">editar</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-	<a href="ServletLibros?accion=formularioInsertar">insertar</a>
 
 </body>
 </html>
