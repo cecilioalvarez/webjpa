@@ -96,18 +96,23 @@ public class ServletLibros extends HttpServlet {
 				request.setAttribute("listaLibros", listaLibros);
 				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
 
-			} else if (accion.equals("ordenarTitulo")) {
+			} else if (accion.equals("ordenar")) {
 
-				List<Libro> listaLibros = repositorio.ordenarPorTitulo();
-				request.setAttribute("listaLibros", listaLibros);
+				String ordenarPor = request.getParameter("ordenarPor");
+
+				if (ordenarPor.equals("titulo")) {
+					List<Libro> listaLibros = repositorio.ordenarPorTitulo();
+					request.setAttribute("listaLibros", listaLibros);
+	
+				} else if (ordenarPor.equals("precio")) {
+					List<Libro> listaLibros = repositorio.ordenarPorPrecio();
+					request.setAttribute("listaLibros", listaLibros);
+					
+				} else if (ordenarPor.equals("categoria")) {
+					List<Libro> listaLibros = repositorio.ordenarPorCategoria();
+					request.setAttribute("listaLibros", listaLibros);
+				}
 				despachador = request.getRequestDispatcher("libros2/ordenados.jsp");
-
-			} else if (accion.equals("ordenarPrecio")) {
-
-				List<Libro> listaLibros = repositorio.ordenarPorPrecio();
-				request.setAttribute("listaLibros", listaLibros);
-				despachador = request.getRequestDispatcher("libros2/ordenados.jsp");
-
 			}
 
 		} else {

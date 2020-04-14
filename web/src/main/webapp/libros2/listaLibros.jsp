@@ -14,10 +14,10 @@
 	<table>
 		<tr>
 			<th>ISBN</th>
-			<th><a href = "ServletLibros?accion=ordenarTitulo">Titulo</a></th>
-			<th>Categoria</th>
+			<th><a href = "ServletLibros?accion=ordenar&ordenarPor=titulo">Titulo</a></th>
+			<th><a href = "ServletLibros?accion=ordenar&ordenarPor=categoria">Categoria</a></th>
 			<th>Autor</th>
-			<th><a href = "ServletLibros?accion=ordenarPrecio">Precio</a></th>
+			<th><a href = "ServletLibros?accion=ordenar&ordenarPor=precio">Precio</a></th>
 		</tr>
 		<c:forEach items="${listaLibros}" var="libro">
 			<tr>
