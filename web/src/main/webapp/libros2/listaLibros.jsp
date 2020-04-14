@@ -16,9 +16,9 @@
 	<table>
 		<tr>
 			<th>ISBN</th>
-			<th>Titulo</th>
+			<th><a href="ServletLibros?accion=ordenar&ordenarPor=titulo">Titulo</a></th>th>
 			<th>Categoria</th>
-			<th>Autor</th>
+			<th><a href="ServletLibros?accion=ordenar&ordenarPor=autor">Autor</a></th>th>
 			<th>Precio</th>
 		</tr>
 		<c:forEach items="${listaLibros}" var="libro">
