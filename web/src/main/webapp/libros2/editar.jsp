@@ -2,10 +2,7 @@
 <%@page import="es.avalon.dominio.Libro"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-Libro libro= (Libro)request.getAttribute("libro");
-
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -15,20 +12,20 @@ Libro libro= (Libro)request.getAttribute("libro");
 <form action="ServletLibros">
 
 <p>
-isbn:<input type="text" name="isbn" value="<%=libro.getIsbn()%>" />
+isbn:<input type="text" name="isbn" value=" ${libro.isbn} " />
 </p>
 <p>
-titulo:<input type="text" name="titulo" value="<%=libro.getTitulo()%>"  />
+titulo:<input type="text" name="titulo" value=" ${libro.titulo} "  />
 </p>
 <p>
-autor:<input type="text" name="autor" value="<%=libro.getAutor()%>"  />
+autor:<input type="text" name="autor" value=" ${libro.autor} "  />
 </p>
 <p>
-precio:<input type="text" name="precio" value="<%=libro.getPrecio()%>" />
+precio:<input type="text" name="precio" value=" ${libro.precio} " />
 </p>
 
 <p>
-categoria:<input type="text" name="categoria"  value="<%=libro.getCategoria().getNombre()%>" />
+categoria:<input type="text" name="categoria"  value=" ${libro.categoria.nombre} " />
 </p>
 <p>
 <input type="submit" value="aceptar"/>
