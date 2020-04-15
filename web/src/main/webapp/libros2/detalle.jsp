@@ -1,10 +1,7 @@
 <%@page import="es.avalon.dominio.Libro"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-Libro libro= (Libro) request.getAttribute("libro");
 
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,19 +10,19 @@ Libro libro= (Libro) request.getAttribute("libro");
 </head>
 <body>
 <p>
-isbn:<%=libro.getIsbn()%>
+isbn:${libro.isbn}
 </p>
 <p>
-titulo:<%=libro.getTitulo()%>
+titulo:${libro.titulo}
 </p>
 <p>
-autor:<%=libro.getAutor()%>
+autor:${libro.autor}
 </p>
 <p>
-precio:<%=libro.getPrecio()%>
+precio:${libro.precio}
 </p>
 <p>
-categoria:<%=libro.getCategoria()%>
+categoria:${libro.categoria.nombre}
 </p>
 
 </body>

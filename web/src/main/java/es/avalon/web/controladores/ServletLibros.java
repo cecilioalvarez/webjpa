@@ -18,6 +18,7 @@ import es.avalon.repositorios.LibroRepository;
 import es.avalon.repositorios.jdbc.LibroRepositoryJDBC;
 import es.avalon.repositorios.jpa.CategoriaRepositoryJPA;
 import es.avalon.repositorios.jpa.LibroRepositoryJPA;
+import es.avalon.servicios.ServicioLibros;
 
 /**
  * aportan informacion clave al servidor
@@ -31,8 +32,10 @@ public class ServletLibros extends HttpServlet {
 
 		RequestDispatcher despachador = null;
 		String accion = request.getParameter("accion");
+		
+		ServicioLibros servicio=new ServicioLibros();
 		LibroRepository repositorio = new LibroRepositoryJPA();
-		CategoriaRepository repositorioCategoria = new CategoriaRepositoryJPA();
+		//CategoriaRepository repositorioCategoria = new CategoriaRepositoryJPA();
 
 		// hay algun tipo de accion
 		if (accion != null) {
@@ -51,7 +54,7 @@ public class ServletLibros extends HttpServlet {
 
 				Libro milibro = new Libro(isbn, titulo, autor, precio);
 				// uso el nuevo repositorio para buscar una categoria
-				Categoria micategoria=repositorioCategoria.buscarPorNombre(categoria);
+				Categoria micategoria=servicio.buscarCategoriasPorNombre(categoria);
 				
 				// asigno al libro la categoria que necesita
 				milibro.setCategoria(micategoria);
@@ -82,10 +85,75 @@ public class ServletLibros extends HttpServlet {
 				// redirigir
 				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
 				
-			}else {
+			}else if(accion.equals("editar")) {
+				
+				// accion=editar
+				String isbn = request.getParameter("isbn");
+				Libro milibro = repositorio.buscarPorISBN(isbn);
+				request.setAttribute("libro", milibro);
+				despachador =request.getRequestDispatcher("libros2/editar.jsp");
+
+			} else if(accion.equals("salvar")){
+				
+				// accion=salvar
+				
+				// recepcionar
+				String isbn = request.getParameter("isbn");
+				String titulo = request.getParameter("titulo");
+				String autor = request.getParameter("autor");
+				int precio = Integer.parseInt(request.getParameter("precio"));
+				String categoria = request.getParameter("categoria");
+
+				Libro milibro = new Libro(isbn, titulo, autor, precio);
+				// uso el nuevo repositorio para buscar una categoria
+				Categoria micategoria=servicio.buscarCategoriasPorNombre(categoria);
+				
+				// asigno al libro la categoria que necesita
+				milibro.setCategoria(micategoria);
+				// salvar
+				repositorio.salvar(milibro);
+				
+				// cargar el nuevo listado
+				List<Libro> listaLibros=repositorio.buscarTodos();
+				request.setAttribute("listaLibros", listaLibros);
+
+				// redirigir
+				despachador = request.getRequestDispatcher("libros2/listaLibros.jsp");
+
+			}else if (accion.equals("detalle")){
+				
+				// accion=verDetalle
+				String isbn = request.getParameter("isbn");
+				Libro libro=repositorio.buscarPorISBN(isbn);
+				request.setAttribute("libro", libro);
+				
+				despachador =request.getRequestDispatcher("libros2/detalle.jsp");
+				
+			}else if (accion.equals("ordenar")) {
+				
+				String ordenarPor=request.getParameter("ordenarPor");
+				if(ordenarPor.contentEquals("titulo")) {
+					
+					List<Libro> listaLibros=repositorio.ordenarTitulo();
+					request.setAttribute("listaLibros", listaLibros);
+					
+				}else {
+					
+					List<Libro> listaLibros=repositorio.ordenarAutor();
+					request.setAttribute("listaLibros", listaLibros);
+					
+				}
+				
+					
+				despachador =request.getRequestDispatcher("libros2/listaLibros.jsp");
+				
+			}
+			
+			
+			
+			else {
 
 			}
-
 			
 			
 		} else {
