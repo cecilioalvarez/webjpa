@@ -4,10 +4,9 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-List<Libro> lista =(List<Libro>) request.getAttribute("listaLibros");
+	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,23 +17,23 @@ List<Libro> lista =(List<Libro>) request.getAttribute("listaLibros");
 	<table>
 		<tr>
 			<th>ISBN</th>
-			<th>Titulo</th>
-			<th>Categoria</th>
-			<th>Autor</th>
+			<th><a href="ServletLibros?accion=ordenar&ordenarPor=titulo">Titulo</a></th>
+			<th><a href="ServletLibros?accion=ordenar&ordenarPor=categoria">Categoria</a></th>
+			<th><a href="ServletLibros?accion=ordenar&ordenarPor=autor">Autor</a></th>
 			<th>Precio</th>
 		</tr>
-		<% for (Libro l:lista ) { %>
+		<c:forEach items="${listaLibros}" var="libro">
 		<tr>
-			<td><%=l.getIsbn()%></td>
-			<td><%=l.getTitulo()%></td>
-			<td><%=l.getCategoria().getNombre()%></td>
-			<td><%=l.getAutor()%></td>
-			<td><%=l.getPrecio()%></td>
-			<td><a href="ServletLibros?isbn=<%=l.getIsbn()%>&accion=borrar">borrar</a></td>
-			<td><a href="ServletLibros?isbn=<%=l.getIsbn()%>&accion=detalle">detalle</a></td>
-			<td><a href="ServletLibros?isbn=<%=l.getIsbn()%>&accion=editar">editar</a></td>
+			<td>${libro.isbn}</td>
+			<td>${libro.titulo}</td>
+			<td>${libro.categoria.nombre}</td>
+			<td>${libro.autor}</td>
+			<td>${libro.precio}</td>
+			<td><a href="ServletLibros?isbn=${libro.isbn}&accion=borrar">borrar</a></td>
+			<td><a href="ServletLibros?isbn=${libro.isbn}&accion=detalle">detalle</a></td>
+			<td><a href="ServletLibros?isbn=${libro.isbn}&accion=editar">editar</a></td>
 		</tr>	
-		<% } %>
+		</c:forEach>
 	</table>
 	<a href="ServletLibros?accion=formularioInsertar">insertar</a>
 	
