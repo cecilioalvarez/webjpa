@@ -15,7 +15,7 @@ import es.avalon.dominio.Categoria;
 import es.avalon.dominio.Libro;
 import es.avalon.repositorios.CategoriaRepository;
 import es.avalon.repositorios.LibroRepository;
-import es.avalon.repositorios.jdbc.LibroRepositoryJDBC;
+
 import es.avalon.repositorios.jpa.CategoriaRepositoryJPA;
 import es.avalon.repositorios.jpa.LibroRepositoryJPA;
 import es.avalon.servicios.ServicioLibros;
